@@ -1,0 +1,79 @@
+@charset "UTF-8";
+/* General body styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('https://media.istockphoto.com/id/1284690585/photo/colorful-vegetables-and-fruits-vegan-food-in-rainbow-colors.jpg?s=612x612&w=0&k=20&c=fXqp_CPaHMyfzMhjZGQG1zloNBNkVRjdYKScw3K98XQ=') no-repeat center center fixed; /* Replace with your image URL */
+    background-size: cover;
+    color: #333;
+}
+
+/* Centering the form and table */
+form, table {
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Form input styling */
+form label {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    display: block;
+}
+
+form input[type="text"], 
+form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, 
+table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 1em;
+}
+
+table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Headings */
+h2, h3 {
+    text-align: center;
+    color: #4CAF50;
+}
+
+/* Image in the table */
+table img {
+    border-radius: 5px;
+    max-width: 100px;
+    height: auto;
+}
