@@ -1,157 +1,178 @@
-<%@ page import="GroceryStore.dto.Grocery"%>
+<%@page import="GroceryStore.dao.CartDao"%>
+<%@ page import="GroceryStore.dto.Cart"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Customer Dashboard</title>
+<title>Shopping Cart</title>
 <style>
-body {
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-}
-
-h1 {
-	text-align: center;
-	margin: 20px 0;
-}
-
-.search-bar {
-	text-align: center;
-	margin: 20px 0;
-}
-
-.search-bar input{
-	position:relative;
-	
-}
-
-.search-bar input[type="text"] {
-	width: 300px;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-}
-
-.search-bar button {
-	padding: 10px 20px;
-	margin-left: 10px;
-	background-color: #28a745;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
-.search-bar button:hover {
-	background-color: #218838;
-}
-
 .card-container {
 	display: flex;
+	align-items: center;
+	text-align: center;
 	flex-wrap: wrap;
-	gap: 20px;
-	padding: 20px;
-	justify-content: center;
-/* 	border:2px black solid; */
-	margin: 0px 40px 0px 40px
 }
 
 .card {
 	border: 1px solid #ccc;
-	border-radius: 8px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	padding: 15px;
-	text-align: center;
+	margin: 10px;
+	padding: 10px;
 	width: 200px;
+	text-align: center;
 }
 
-.card img {
-	max-width: 100%;
-	height: 150px;
-	object-fit: cover;
-	border-radius: 8px;
+img {
+	height: 100px;
+	width: 140px;
 }
 
-.card h3 {
-	margin: 10px 0;
+button {
+	padding: 5px 10px;
+	margin: 5px;
+}
+
+.quantity {
 	font-size: 18px;
+	font-weight: bold;
+	padding: 5px 10px;
+	margin: 0 10px;
 }
 
-.card p {
-	margin: 5px 0;
-	color: #555;
+#total-sum {
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 20px;
 }
 </style>
 <script>
-	function filterItems() {
-		let input = document.getElementById("searchInput").value.toLowerCase();
-		let cards = document.getElementsByClassName("card");
+        document.addEventListener("DOMContentLoaded", () => {
+            const totalItems = <%=(session.getAttribute("cartView") != null) ? ((Cart[]) session.getAttribute("cartView")).length : 0%>;
+            for (let i = 0; i < totalItems; i++) {
+                display(i); // Initialize individual item totals
+            }
+            updateGrandTotal(); // Calculate the initial grand total
+        });
 
-		for (let i = 0; i < cards.length; i++) {
-			let itemName = cards[i].getElementsByTagName("h3")[0].innerText
-					.toLowerCase();
-			if (itemName.includes(input)) {
-				cards[i].style.display = "block";
-			} else {
-				cards[i].style.display = "none";
-			}
-		}
-	}
-</script>
+        function increaseQuantity(index) {
+            const quantityElement = document.getElementById(`q-` + index);
+            let currentQuantity = parseInt(quantityElement.innerText);
+            currentQuantity++;
+            quantityElement.innerText = currentQuantity;
+            display(index);
+        }
+
+        function decreaseQuantity(index) {
+            const totalItems = <%=(session.getAttribute("cartView") != null) ? ((Cart[]) session.getAttribute("cartView")).length : 0%>;
+            const quantityElement = document.getElementById(`q-` + index);
+            let currentQuantity = parseInt(quantityElement.innerText);
+            
+            if (currentQuantity >= 1) {
+                currentQuantity--;
+            }
+            
+            if (currentQuantity == 0) {
+                // Set the index in the hidden input and submit the form
+                document.getElementById('removeIndex').value = index;
+                document.getElementById('removeForm').submit();
+                return;
+            } else {
+                quantityElement.innerText = currentQuantity;
+            }
+            
+            display(index);
+        }
+
+        function display(index) {
+            const priceDis = document.getElementById(`qdis-` + index);
+            const price = document.getElementById(`price-` + index);
+            const quant = document.getElementById(`q-` + index);
+
+            const itemTotal = parseInt(price.dataset.price) * parseInt(quant.innerText);
+            priceDis.textContent = itemTotal;
+
+            updateGrandTotal();
+        }
+
+        function updateGrandTotal() {
+        	const totalItems = <%=(session.getAttribute("cartView") != null) ? ((Cart[]) session.getAttribute("cartView")).length : 0%>;
+            let grandTotal = 0;
+			
+            for (let i = 0; i < totalItems; i++) {
+                const itemTotal = parseInt(document.getElementById(`qdis-` + i).textContent) || 0;
+                grandTotal += itemTotal;
+            }
+            document.getElementById("total-sum").textContent = `Amount to be paid : ₹`+grandTotal;
+            document.getElementById("billAmount").value = grandTotal;
+        }
+    </script>
 </head>
 <body>
-	<div>
-		<h1>Customer Dashboard</h1>
-
-		<!-- Search Bar -->
-		<div class="search-bar">
-			<input type="text" id="searchInput"
-				placeholder="Search for an item..." onkeyup="filterItems()">
-		
-			<button
-				style="box-shadow: 5px 5px 0px rgba(0,0,0,0.5);position:absolute;right:180px;border-radius: 5px; background-color: black; padding: 8px;">
-				<a style="text-decoration: none; color: white; font-size: 13px;"
-					href="cart">View Cart</a>
-			</button>
-		</div>
-	</div>
-
 	<div class="card-container">
 		<%
-		Grocery[] groceries = (Grocery[]) request.getAttribute("fAllItems");
-		if (groceries != null && groceries.length > 0) {
-			for (Grocery grocery : groceries) {
+		Cart[] cart = (Cart[]) session.getAttribute("cartView");
+		if (cart != null && cart.length > 0) {
+			for (int i = 0; i < cart.length; i++) {
+				Cart c = cart[i];
+				if (c != null) {
 		%>
-		<div class="card">
-			<img src="<%=grocery.getItemimage()%>"
-				alt="<%=grocery.getItemname()%>">
-			<h3><%=grocery.getItemname()%></h3>
+		<div class="card" id="card-<%=i%>">
+			<img src="<%=c.getcItemImage()%>" alt="<%=c.getcItemName()%>">
+			<h3><%=c.getcItemName()%></h3>
 			<p>
-				Price: &#8377;<%=grocery.getItemprice()%></p>
+				Cart ID:
+				<%=c.getCartId()%></p>
+			<p id="price-<%=i%>" data-price="<%=c.getcItemPrice()%>">
+				Price: ₹<%=c.getcItemPrice()%></p>
+			<div>
+				<button type="button" onclick="decreaseQuantity(<%=i%>)">-</button>
+				<span id="q-<%=i%>" class="quantity">1</span>
+
+				<form id="removeForm" action="removeFrom" method="post"
+					style="display: none;">
+					<input type="hidden" name="index" id="removeIndex">
+				</form>
+
+				<button type="button" onclick="increaseQuantity(<%=i%>)">+</button>
+			</div>
 			<p>
-				Quantity:
-				<%=grocery.getItemquantity()%></p>
-			<form action="savecrt" method="post">
-				<input style="display: none;" name="name"
-					value="<%=grocery.getItemname()%>">
-				<button>Add to cart</button>
-				<input hidden=true placeholder="ion">&nbsp; &nbsp; &nbsp;
-			</form>
+				Total Price: ₹<span id="qdis-<%=i%>"></span>
+			</p>
 		</div>
-		<% 	
+		<%
+		}
 		}
 		%>
+	</div>
+	<p id="total-sum">Grand Total: ₹</p>
+
+	<form action="billing" method="post"
+		style="text-align: center; margin-top: 20px;">
+		<input type="number" hidden="true" name="billAmount" id="billAmount">
+		<button type="submit">BILLING</button>
+	</form>
+	<%
+	} else {
+	%>
+	<div style= "display : flex; flex-direction : column; width : 100vw; height : 100vh; align-items : center; justify-content : center">
+		<h2>No items available</h2>
 		
-		<%
-		} else {
-		%>
-		<p>No items available</p>
-		<%
-		}
-		%>
+	<%
+	}
+	%>
+	<form action="login" method="post">
+			<%
+			HttpSession ses = request.getSession();
+			%>
+			<input name="email" type="email"
+				value="<%=ses.getAttribute("loginEmail")%>" hidden="true"> <input
+				type="radio" value="customer" name="usertype" checked="checked"
+				hidden="true"> 
+				<input type="password" name="password"
+				value="<%=ses.getAttribute("loginPwd")%>" hidden="true">
+			<button style = "bORDER-RADIUS : 3px;BORDER : 1PX SOLID BLACK;box-shadow : 5px 5px gray;color:blue; background-color: cerel"> DASHBOARD </button>
+		</form>
 	</div>
 </body>
 </html>
