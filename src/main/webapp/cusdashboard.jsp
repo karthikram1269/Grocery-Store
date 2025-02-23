@@ -23,6 +23,11 @@ h1 {
 	margin: 20px 0;
 }
 
+.search-bar input{
+	position:relative;
+	
+}
+
 .search-bar input[type="text"] {
 	width: 300px;
 	padding: 10px;
@@ -50,6 +55,8 @@ h1 {
 	gap: 20px;
 	padding: 20px;
 	justify-content: center;
+/* 	border:2px black solid; */
+	margin: 0px 40px 0px 40px
 }
 
 .card {
@@ -96,12 +103,20 @@ h1 {
 </script>
 </head>
 <body>
-	<h1>Customer Dashboard</h1>
-	
-	<!-- Search Bar -->
-	<div class="search-bar">
-		<input type="text" id="searchInput"
-			placeholder="Search for an item..." onkeyup="filterItems()">
+	<div>
+		<h1>Customer Dashboard</h1>
+
+		<!-- Search Bar -->
+		<div class="search-bar">
+			<input type="text" id="searchInput"
+				placeholder="Search for an item..." onkeyup="filterItems()">
+		
+			<button
+				style="box-shadow: 5px 5px 0px rgba(0,0,0,0.5);position:absolute;right:180px;border-radius: 5px; background-color: black; padding: 8px;">
+				<a style="text-decoration: none; color: white; font-size: 13px;"
+					href="cart">View Cart</a>
+			</button>
+		</div>
 	</div>
 
 	<div class="card-container">
@@ -113,22 +128,24 @@ h1 {
 		<div class="card">
 			<img src="<%=grocery.getItemimage()%>"
 				alt="<%=grocery.getItemname()%>">
-			<h3 ><%=grocery.getItemname()%></h3>
+			<h3><%=grocery.getItemname()%></h3>
 			<p>
 				Price: &#8377;<%=grocery.getItemprice()%></p>
 			<p>
 				Quantity:
 				<%=grocery.getItemquantity()%></p>
-				<form action ="savecrt" method="post">
-					<input style = "display:none;" name ="name" value = "<%=grocery.getItemname()%>">
-					<button type = "submit" >Add to cart</button> &nbsp; &nbsp; &nbsp; 
-				</form>
+			<form action="savecrt" method="post">
+				<input style="display: none;" name="name"
+					value="<%=grocery.getItemname()%>">
+				<button>Add to cart</button>
+				<input hidden=true placeholder="ion">&nbsp; &nbsp; &nbsp;
+			</form>
 		</div>
-		<%
+		<% 	
 		}
-			%>
-					<a style = {text-decoration:none;} href = "cart" >View Cart</a>
-			<%
+		%>
+		
+		<%
 		} else {
 		%>
 		<p>No items available</p>
