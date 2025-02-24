@@ -48,13 +48,18 @@ button {
 </style>
 <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const totalItems = <%=(session.getAttribute("cartView") != null) ? ((Cart[]) session.getAttribute("cartView")).length : 0%>;
+        const totalItems = <%=(session.getAttribute("cartView") != null) ? ((Cart[]) session.getAttribute("cartView")).length : 0%>;
             for (let i = 0; i < totalItems; i++) {
                 display(i); // Initialize individual item totals
             }
             updateGrandTotal(); // Calculate the initial grand total
         });
 
+        function beforeBill(event){
+        	if(!confirm(" are you ready to pay ??")){
+        		event.preventDefault();
+        	}
+        }
         function increaseQuantity(index) {
             const quantityElement = document.getElementById(`q-` + index);
             let currentQuantity = parseInt(quantityElement.innerText);
@@ -150,7 +155,7 @@ button {
 	<form action="billing" method="post"
 		style="text-align: center; margin-top: 20px;">
 		<input type="number" hidden="true" name="billAmount" id="billAmount">
-		<button type="submit">BILLING</button>
+		<button onclick = "beforeBill(event)" style = "border:3px solid gray; font:15px serif;" type="submit">PAY</button>
 	</form>
 	<%
 	} else {
