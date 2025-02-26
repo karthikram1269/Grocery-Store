@@ -12,13 +12,15 @@ import GroceryStore.dao.GroceryDao;
 import GroceryStore.dto.Grocery;
 
 @WebServlet("/search")
-public class FetchItem extends HttpServlet {
+public class FetchVendorItem extends HttpServlet {
 	GroceryDao dao = new GroceryDao();
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession ses = req.getSession();
+		String email = (String) ses.getAttribute("loginEmail");
 		String itemname = req.getParameter("itemname");
-		Grocery db = dao.fetchItem(itemname);
+		Grocery db = dao.fetchItem(email,itemname);
 
 		if (db != null) {
 			
@@ -28,13 +30,10 @@ public class FetchItem extends HttpServlet {
 			req.setAttribute("item", db);
 
 			// Send Grocery object to JSP
-			req.getRequestDispatcher("fetch.jsp").forward(req, resp);
+			req.getRequestDispatcher("venfetch.jsp").forward(req, resp);
 		} else {
-			req.setAttribute("itmmsg2", "No such item exists in your database.");
-			req.getRequestDispatcher("fetch.jsp").include(req, resp);
+			req.setAttribute("itmmsg", "No such item exists in your database.");
+			req.getRequestDispatcher("venfetch.jsp").include(req, resp);
 		}
-
-		// Forward to JSP
-//		req.getRequestDispatcher("fetch.jsp").forward(req, resp);
 	}
 }
