@@ -34,6 +34,7 @@ public class Login extends HttpServlet {
 					req.getRequestDispatcher("vendashboard.jsp").forward(req, resp);
 				} else {
 					Grocery[] groceries = gdao.fetchAllItems();
+					httpsession.setAttribute("fAllItems", groceries);
 					req.setAttribute("fAllItems", groceries);
 					req.getRequestDispatcher("cusdashboard.jsp").forward(req, resp);
 				}
