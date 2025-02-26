@@ -39,5 +39,6 @@ public class RemoveFromCart extends HttpServlet{
 	    session.setAttribute("cartView", dao.fetchAllInCart());
 
 	    request.getRequestDispatcher("Cart.jsp").include(request, response);
+	    
 	}
 }
