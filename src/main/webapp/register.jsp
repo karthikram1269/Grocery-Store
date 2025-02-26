@@ -9,12 +9,14 @@
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f0f4f8;
-	margin: 0;
+	margin: 20px;;
 	padding: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+	display:flex;
+	flex-direction:column;
 }
 
 form {
@@ -22,12 +24,13 @@ form {
 	padding: 20px;
 	border-radius: 10px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	max-width: 400px;
+	max-width: 450px;
 	width: 100%;
 }
 
 h1 {
 	text-align: center;
+	margin:0px;
 	margin-bottom: 20px;
 	color: #333333;
 }
@@ -42,7 +45,7 @@ label {
 input[type="text"], input[type="email"], input[type="password"], input[type="tel"]
 	{
 	width: 100%;
-	padding: 10px;
+	padding: 8px;
 	margin-bottom: 15px;
 	border: 1px solid #cccccc;
 	border-radius: 5px;
@@ -111,32 +114,37 @@ p a:hover {
 			type="text" id="address" placeholder="Enter your address"
 			name="address"> <input type="submit" value="REGISTER">
 	</form>
-	<p id="cormth">
-	<span id="account-text">Already have an account?</span> <a href="login.jsp">Login from here</a>
-</p>
+	<div>
+		<p id="cormth">
+			<span id="account-text">Already have an account?</span> <a
+				href="login.jsp">Login from here</a>
+		</p>
+	</div>
 
-<%
-	String msg = (String) request.getAttribute("ExistMes");
-	if (msg != null) {
-%>
-<div class="error-message" id="error-msg"><%=msg%></div>
-<%
-	}
-%>
-
-<script>
-	// Check if the error message exists
-	window.onload = function() {
-		const errorMessage = document.getElementById('error-msg');
-		if (errorMessage) {
-			// Only clear the "Already have an account?" text
-			const accountText = document.getElementById('account-text');
-			if (accountText) {
-				accountText.textContent = ''; // Clear the text content
-			}
+	<div>
+		<%
+		String msg = (String) request.getAttribute("ExistMes");
+		if (msg != null) {
+		%>
+		<div class="error-message" id="error-msg"><%=msg%></div>
+		<%
 		}
-	};
-</script>
+		%>
+	</div>
+
+	<script>
+		// Check if the error message exists
+		window.onload = function() {
+			const errorMessage = document.getElementById('error-msg');
+			if (errorMessage) {
+				// Only clear the "Already have an account?" text
+				const accountText = document.getElementById('account-text');
+				if (accountText) {
+					accountText.textContent = ''; // Clear the text content
+				}
+			}
+		};
+	</script>
 
 
 </body>
