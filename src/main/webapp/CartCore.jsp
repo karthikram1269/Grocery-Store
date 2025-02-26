@@ -48,13 +48,18 @@ button {
 </style>
 <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const totalItems = <%=(session.getAttribute("cartView") != null) ? ((Cart[]) session.getAttribute("cartView")).length : 0%>;
+        const totalItems = <%=(session.getAttribute("cartView") != null) ? ((Cart[]) session.getAttribute("cartView")).length : 0%>;
             for (let i = 0; i < totalItems; i++) {
                 display(i); // Initialize individual item totals
             }
             updateGrandTotal(); // Calculate the initial grand total
         });
 
+        function beforeBill(event){
+        	if(!confirm(" are you ready to pay ??")){
+        		event.preventDefault();
+        	}
+        }
         function increaseQuantity(index) {
             const quantityElement = document.getElementById(`q-` + index);
             let currentQuantity = parseInt(quantityElement.innerText);
@@ -98,12 +103,13 @@ button {
         function updateGrandTotal() {
         	const totalItems = <%=(session.getAttribute("cartView") != null) ? ((Cart[]) session.getAttribute("cartView")).length : 0%>;
             let grandTotal = 0;
-
+			
             for (let i = 0; i < totalItems; i++) {
                 const itemTotal = parseInt(document.getElementById(`qdis-` + i).textContent) || 0;
                 grandTotal += itemTotal;
             }
-            document.getElementById("total-sum").textContent = `Amount to be paid : ₹`+grandTotal;
+            document.getElementById("total-sum").innerHTML = `Amount to be paid : &#8377;` + grandTotal;
+            document.getElementById("billAmount").value = grandTotal;
         }
     </script>
 </head>
@@ -123,7 +129,7 @@ button {
 				Cart ID:
 				<%=c.getCartId()%></p>
 			<p id="price-<%=i%>" data-price="<%=c.getcItemPrice()%>">
-				Price: ₹<%=c.getcItemPrice()%></p>
+				Price: &#8377;<%=c.getcItemPrice()%></p>
 			<div>
 				<button type="button" onclick="decreaseQuantity(<%=i%>)">-</button>
 				<span id="q-<%=i%>" class="quantity">1</span>
@@ -136,7 +142,7 @@ button {
 				<button type="button" onclick="increaseQuantity(<%=i%>)">+</button>
 			</div>
 			<p>
-				Total Price: ₹<span id="qdis-<%=i%>"></span>
+				Total Price: &#8377;<span id="qdis-<%=i%>"></span>
 			</p>
 		</div>
 		<%
@@ -145,25 +151,33 @@ button {
 		%>
 	</div>
 	<p id="total-sum">Grand Total: ₹</p>
+
 	<form action="billing" method="post"
 		style="text-align: center; margin-top: 20px;">
-		<button type="submit">BILLING</button>
+		<input type="number" hidden="true" name="billAmount" id="billAmount">
+		<button onclick = "beforeBill(event)" style = "border:3px solid gray; font:15px serif;" type="submit">PAY</button>
 	</form>
 	<%
 	} else {
 	%>
-	<p>No items available</p>
-	<br> <br>
-	<form action="login" method="post">
-	<%HttpSession ses = request.getSession(); %>
-	<input name="email" type="email" value="<%=ses.getAttribute("loginEmail")%>" hidden = "true">
-	<input type="radio" value="customer" name="usertype" checked="checked" hidden = "true">
-		Customer
-	<input type="password" name="password" value ="<%=ses.getAttribute("loginPwd")%>" hidden = "true">
-		<button >back to customer dashboard</button>
-	</form>
+	<div style= "display : flex; flex-direction : column; width : 100vw; height : 100vh; align-items : center; justify-content : center">
+		<h2>No items available</h2>
+		
 	<%
 	}
 	%>
+	<form action="login" method="post">
+			<%
+			HttpSession ses = request.getSession();
+			%>
+			<input name="email" type="email"
+				value="<%=ses.getAttribute("loginEmail")%>" hidden="true"> <input
+				type="radio" value="customer" name="usertype" checked="checked"
+				hidden="true"> 
+				<input type="password" name="password"
+				value="<%=ses.getAttribute("loginPwd")%>" hidden="true">
+			<button style = "bORDER-RADIUS : 3px;BORDER : 1PX SOLID BLACK;box-shadow : 5px 5px gray;color:blue; background-color: cerel"> DASHBOARD </button>
+		</form>
+	</div>
 </body>
 </html>
