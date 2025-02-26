@@ -20,8 +20,8 @@ protected void service(HttpServletRequest req, HttpServletResponse res) throws S
 	int itemid= Integer.parseInt(req.getParameter("itemid"));
 	String itemtype=req.getParameter("itemtype");
 	HttpSession h = req.getSession();
-	String itemname=(String)h.getAttribute("ItemName");
-
+	String itemname=req.getParameter("itemname");
+	String email = req.getParameter("email");
 	int itemprice=Integer.parseInt(req.getParameter("price"));
 	String itemquantity=req.getParameter("quantity");
 	String itemimage=req.getParameter("image");
@@ -30,7 +30,7 @@ protected void service(HttpServletRequest req, HttpServletResponse res) throws S
 	GroceryDao dao=new GroceryDao();
 	int result;
 	try {
-		result = dao.updateItems(itemprice, itemquantity, itemimage, itemname);
+		result = dao.updateItems(itemprice, itemquantity, itemimage, itemname,email);
 		if(result>0) {
 			req.setAttribute("upmsg", "updated successfully...");	
 			req.getRequestDispatcher("updateitems.jsp").include(req,res);
