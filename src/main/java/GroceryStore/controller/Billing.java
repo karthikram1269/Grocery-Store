@@ -52,6 +52,7 @@ public class Billing extends HttpServlet {
 		
 		bdao.saveBill(b);
 		cd.deleteCartTotal();
+		// to delete the data present in the session
 //		ses.invalidate();
 		
 		ses.setAttribute("billa", b);
