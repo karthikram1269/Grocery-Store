@@ -1,149 +1,94 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Login Form</title>
-<style>
-body {
-	font-family: Arial, sans-serif;
-	background-color: #f0f4f8;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-}
+    <meta charset="UTF-8">
+    <title>User Actions</title>
+    <style>
+        body {
+/*             border: 2px solid black; */
+            height: 100vh;
+            font-size: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
 
-form {
-	background: #ffffff;
-	padding: 25px;
-	border-radius: 10px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	max-width: 400px;
-	width: 100%;
-}
+        .btn {
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            font-size: 18px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            width: 250px;
+            margin: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-h1 {
-	text-align: center;
-	margin-bottom: 20px;
-	color: #333333;
-	font-size: 1.5rem;
-}
+        .btn:hover {
+            background-color: lightgreen;
+            color: red;
+        }
 
-label {
-	display: block;
-	margin-bottom: 8px;
-	font-weight: bold;
-	color: #555555;
-}
+        .btn:focus {
+            outline: none;
+        }
 
-input[type="text"], input[type="email"], input[type="password"] {
-	width: 100%;
-	padding: 10px;
-	margin-bottom: 15px;
-	border: 1px solid #cccccc;
-	border-radius: 5px;
-	box-sizing: border-box;
-	font-size: 1rem;
-}
+        .dashboard-btn {
+            margin-top: 40px;
+            text-decoration: none;
+            background-color: cyan;
+            color: black;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
 
-input[type="radio"] {
-	margin-right: 8px;
-	accent-color: #007bff;
-}
+        .dashboard-btn:hover {
+            background-color: lightblue;
+        }
 
-.radio-group {
-	margin-bottom: 15px;
-	font-size: 1rem;
-}
-
-.radio-group label {
-	display: inline;
-	margin-right: 15px;
-	color: #333;
-}
-
-input[type="submit"] {
-	background-color: #007bff;
-	color: #ffffff;
-	padding: 10px;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-	width: 100%;
-	font-size: 1rem;
-	font-weight: bold;
-}
-
-input[type="submit"]:hover {
-	background-color: #0056b3;
-}
-
-p {
-	text-align: center;
-	margin-top: 15px;
-	font-size: 1rem;
-}
-
-p a {
-	color: #007bff;
-	text-decoration: none;
-	font-weight: bold;
-}
-
-p a:hover {
-	text-decoration: underline;
-}
-
-.error-message {
-	color: red;
-	text-align: center;
-	margin-top: 15px;
-	font-size: 1rem;
-	font-weight: bold;
-}
-</style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
 </head>
 <body>
-	<form action="login" method="post">
-		<h1>Login Form</h1>
-		<label for="email">Email:</label> <input required autofocus
-			type="email" id="email" placeholder="Enter your email" name="email">
+<script>
+        window.onload = function () {
+            const logoutBtn = document.getElementById("log");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    let confirmLogout = confirm("Are you sure you want to logout?");
+                    if (confirmLogout) {
+                        window.location.href = "Userlogout";
+                    }
+                });
+            }
+        };
+    </script>
+    <div class="container">
+        <a href="update.jsp" class="btn">Update Your Profile</a>
+        <a href="delete.jsp" class="btn">Delete Your Profile</a>
+        <a href="view.jsp" class="btn">View Your Profile</a>
+        <a  id="log" class="btn">Logout</a>
+    </div>
 
-		<label for="password">Password:</label> <input type="password"
-			id="password" placeholder="Enter your password" name="password">
+    <a href="vendashboard.jsp" class="dashboard-btn"><button>DASHBOARD</button></a>
 
-		<div class="radio-group">
-			<label>User Type:</label> <label><input type="radio"
-				value="vendor" name="usertype"> Vendor</label> <label><input
-				type="radio" value="customer" name="usertype"> Customer</label>
-		</div>
+    
 
-		<input type="submit" value="LOGIN">
-
-		<!-- Move the "Not registered yet?" line inside the form -->
-		<p>
-			Not registered yet? <a href="register.jsp">Register here</a>
-		</p>
-	</form>
-	<%
-	String msg = (String) request.getAttribute("pwdmsg");
-	if (msg != null) {
-	%>
-	<div class="error-message"><%=msg%></div>
-	<%
-	}
-	%>
-	<%
-	String msg1 = (String) request.getAttribute("emmsg");
-	if (msg1 != null) {
-	%>
-	<div class="error-message"><%=msg1%></div>
-	<%
-	}
-	%>
 </body>
 </html>
