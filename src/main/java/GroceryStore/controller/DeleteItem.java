@@ -25,15 +25,15 @@ public class DeleteItem extends HttpServlet{
 			int result=dao.deleteItem(itemname);
 			if(result>0) {
 				
-				req.getRequestDispatcher("deleteitem.jsp").forward(req, resp);
 				req.setAttribute("delmsg", "deleted sucessfully");
+				req.getRequestDispatcher("deleteitem.jsp").forward(req, resp);
 			}else {
-				
 				req.setAttribute("delmsgs", "Item not deleted");
+				req.getRequestDispatcher("deleteitem.jsp").forward(req, resp);
 			}
 		}else {
-			req.getRequestDispatcher("fetch.jsp").include(req, resp);
-			req.setAttribute("delmsgs1", "No such item exists");
+			req.setAttribute("delmsgs1", "No such item exists to delete");
+			req.getRequestDispatcher("venfetch.jsp").include(req, resp);
 		}
 	}
 	}
