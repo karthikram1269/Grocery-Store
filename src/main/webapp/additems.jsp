@@ -59,6 +59,13 @@
 </style>
 </head>
 <body>
+	<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll("#myForm input").forEach(input => {
+            input.setAttribute("required", "");
+        });
+    });
+</script>
 <%
     HttpSession h = request.getSession();
     String email = (String) h.getAttribute("loginEmail");
@@ -66,7 +73,7 @@
     User db = dao.fetchUser(email);
     if (db != null) {
 %>
-<form action="additem" method="post">
+<form action="additem" method="post" id = "myForm">
     <label for="itemid">Item Id:</label>
     <input type="number" id="itemid" placeholder="Enter the item id" name="itemid">
 
@@ -96,10 +103,11 @@
 </form>
 <%
     } else {
+        request.setAttribute("addIt", " failed to open add items jsp file");
         request.getRequestDispatcher("vendashboard.jsp").include(request, response);
     }
 %>
-<a href="vendashboard.jsp">Click here to go back</a>
+<a href="vendashboard.jsp"> DASHBOARD </a>
 
 </body>
 </html>
