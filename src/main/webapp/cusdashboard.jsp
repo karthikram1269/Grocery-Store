@@ -23,9 +23,8 @@ h1 {
 	margin: 20px 0;
 }
 
-.search-bar input{
-	position:relative;
-	
+.search-bar input {
+	position: relative;
 }
 
 .search-bar input[type="text"] {
@@ -55,14 +54,14 @@ h1 {
 	gap: 20px;
 	padding: 20px;
 	justify-content: center;
-/* 	border:2px black solid; */
+	/* 	border:2px black solid; */
 	margin: 0px 40px 0px 40px
 }
 
 .card {
 	border: 1px solid #ccc;
 	border-radius: 8px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 	padding: 15px;
 	text-align: center;
 	width: 200px;
@@ -86,6 +85,11 @@ h1 {
 }
 </style>
 <script>
+	function logOut(event){
+		if(confirm(" are you ready to log out ??")){
+			window.location.href="Userlogout";
+		}
+	}
 	function filterItems() {
 		let input = document.getElementById("searchInput").value.toLowerCase();
 		let cards = document.getElementsByClassName("card");
@@ -100,6 +104,11 @@ h1 {
 			}
 		}
 	}
+	const b = document.getElementById("aToCart");
+	const i = document.getElementById("aToCart2");
+	b.addEventListener("click",()=>{
+		i.removeAttribute("hidden");
+	})
 </script>
 </head>
 <body>
@@ -110,11 +119,17 @@ h1 {
 		<div class="search-bar">
 			<input type="text" id="searchInput"
 				placeholder="Search for an item..." onkeyup="filterItems()">
-		
+
 			<button
-				style="box-shadow: 5px 5px 0px rgba(0,0,0,0.5);position:absolute;right:180px;border-radius: 5px; background-color: black; padding: 8px;">
+				style="box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.5); position: absolute; right: 180px; border-radius: 5px; background-color: black; padding: 8px;">
 				<a style="text-decoration: none; color: white; font-size: 13px;"
 					href="cart">View Cart</a>
+			</button>
+
+			<button
+				style="box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.5); position: absolute; right: 90px; border-radius: 5px; background-color: crimson; padding: 8px;">
+				<a style="text-decoration: none; color: white; font-size: 13px;"
+					onclick = "logOut(event)" > Log Out </a>
 			</button>
 		</div>
 	</div>
@@ -122,6 +137,11 @@ h1 {
 	<div class="card-container">
 		<%
 		Grocery[] groceries = (Grocery[]) request.getAttribute("fAllItems");
+
+		if (groceries == null) {
+			HttpSession h = request.getSession();
+			groceries = (Grocery[]) h.getAttribute("fAllItems");
+		}
 		if (groceries != null && groceries.length > 0) {
 			for (Grocery grocery : groceries) {
 		%>
@@ -137,14 +157,14 @@ h1 {
 			<form action="savecrt" method="post">
 				<input style="display: none;" name="name"
 					value="<%=grocery.getItemname()%>">
-				<button>Add to cart</button>
-				<input hidden=true placeholder="ion">&nbsp; &nbsp; &nbsp;
+				<button class="aToCart">Add to cart</button>
+				<input class="aToCart2" hidden value="Added">
 			</form>
 		</div>
-		<% 	
+		<%
 		}
 		%>
-		
+
 		<%
 		} else {
 		%>
