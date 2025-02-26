@@ -108,7 +108,7 @@ button {
                 const itemTotal = parseInt(document.getElementById(`qdis-` + i).textContent) || 0;
                 grandTotal += itemTotal;
             }
-            document.getElementById("total-sum").textContent = `Amount to be paid : ₹`+grandTotal;
+            document.getElementById("total-sum").innerHTML = `Amount to be paid : &#8377;` + grandTotal;
             document.getElementById("billAmount").value = grandTotal;
         }
     </script>
@@ -129,7 +129,7 @@ button {
 				Cart ID:
 				<%=c.getCartId()%></p>
 			<p id="price-<%=i%>" data-price="<%=c.getcItemPrice()%>">
-				Price: ₹<%=c.getcItemPrice()%></p>
+				Price: &#8377;<%=c.getcItemPrice()%></p>
 			<div>
 				<button type="button" onclick="decreaseQuantity(<%=i%>)">-</button>
 				<span id="q-<%=i%>" class="quantity">1</span>
@@ -142,7 +142,7 @@ button {
 				<button type="button" onclick="increaseQuantity(<%=i%>)">+</button>
 			</div>
 			<p>
-				Total Price: ₹<span id="qdis-<%=i%>"></span>
+				Total Price: &#8377;<span id="qdis-<%=i%>"></span>
 			</p>
 		</div>
 		<%
