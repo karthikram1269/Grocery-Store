@@ -166,7 +166,7 @@ button {
 	<%
 	}
 	%>
-	<form action="login" method="post">
+	<form action="log-in" method="post">
 			<%
 			HttpSession ses = request.getSession();
 			%>
