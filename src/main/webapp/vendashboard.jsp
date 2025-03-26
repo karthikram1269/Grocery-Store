@@ -45,6 +45,14 @@
         display: inline-block;
         margin: 0 auto;
     }
+/*     #dash{ */
+/*     	position:absolute; */
+/*     	top : 50px; */
+/*     	right:50px; */
+/*     } */
+/*     #dBut{ */
+/*     	background-color:green; */
+/*     } */
 </style>
 </head>
 <body>
@@ -56,6 +64,9 @@
 <%
     }
 %>
+<!-- 	<div id = "dash"> -->
+<!-- 		<a href = "vendashboard.jsp"><button id = "dBut"> DashBoard</button></a> -->
+<!-- 	</div> -->
     <h1>Food Items Management</h1>
 
     <a href="additems.jsp"><button>Add Food Items</button></a> <br>
@@ -64,5 +75,7 @@
     <a href="fetch.jsp"><button>Fetch Food Items based on Item name</button></a> <br>
     <a href="FetchAllHisItems"><button>Fetch All His Items</button></a> <br>
     <a href="profile.jsp"><button>Profile</button></a>
+    
+    
 </body>
 </html>

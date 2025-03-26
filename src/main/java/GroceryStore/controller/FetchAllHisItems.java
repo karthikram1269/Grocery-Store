@@ -20,7 +20,7 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 	String email=(String)h.getAttribute("loginEmail");
 	GroceryDao dao = new GroceryDao();
 	try {
-		int i = dao.fetchAllHisItems(email,resp);
+		dao.fetchAllHisItems(email,resp);
 		
 	}catch(Exception e) {
 		System.out.println(e.getMessage());

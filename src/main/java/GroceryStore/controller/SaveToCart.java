@@ -17,19 +17,26 @@ import GroceryStore.dto.Grocery;
 @WebServlet("/savecrt")
 public class SaveToCart extends HttpServlet{
 	
+	private static final long serialVersionUID = -4155918621942415241L;
+
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		HttpSession session = req.getSession();
 		
 		GroceryDao dao = new GroceryDao();
-		Grocery g = dao.fetchItem(req.getParameter("name"));
+		String s = req.getParameter("name");
+		System.out.println(s+" in save crt. java");
+		Grocery g = dao.fetchItem(s);
+		
 	
 		int cartId=g.getItemid();
 		String cItemName=g.getItemname();
 		int cItemPrice=g.getItemprice();
 		String cItemImage= g.getItemimage();
 		String custEmail = (String) session.getAttribute("loginEmail");
+		
+		System.out.println(custEmail+" email save to cart .j ava ");
 		
 		Cart c = new Cart(cartId, cItemName, cItemPrice, cItemImage, custEmail);
 
@@ -38,18 +45,18 @@ public class SaveToCart extends HttpServlet{
 			int result=cdao.saveCartItem(c);
 			System.out.println(result+" cart item added sucessfully");
 			if(result>0) {
-				req.setAttribute("cartmsg", "Item added successfully...");	
-				Grocery[] groceries = dao.fetchAllItems();
-				req.setAttribute("fAllItems", groceries);
-				req.getRequestDispatcher("cusdashboard.jsp").include(req,resp);
-				}
-				else {
-					System.out.println("cart Item not Added....");
-				}
+				session.setAttribute("cartmsg", "Item added successfully...");	
+//				Grocery[] groceries = dao.fetchAllItems();
+//				req.setAttribute("fAllItems", groceries);
+//				req.getRequestDispatcher("cusdashboard.jsp").include(req,resp);
+			}
+			else {
+				System.out.println("cart Item not Added....");
+			}
 		} catch (Exception e) {
-			Grocery[] groceries = dao.fetchAllItems();
-			req.setAttribute("fAllItems", groceries);
-			req.getRequestDispatcher("cusdashboard.jsp").include(req,resp);
+//			Grocery[] groceries = dao.fetchAllItems();
+//			req.setAttribute("fAllItems", groceries);
+//			req.getRequestDispatcher("cusdashboard.jsp").include(req,resp);
 			System.out.println("Already added to cart : "+e.getMessage());
 		} 
 	}

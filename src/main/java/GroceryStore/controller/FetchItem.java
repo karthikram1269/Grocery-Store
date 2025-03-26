@@ -13,6 +13,10 @@ import GroceryStore.dto.Grocery;
 
 @WebServlet("/search")
 public class FetchItem extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3447979917560743507L;
 	GroceryDao dao = new GroceryDao();
 
 	@Override
@@ -24,17 +28,12 @@ public class FetchItem extends HttpServlet {
 			
 			HttpSession h = req.getSession();
 			h.setAttribute("ItemName", itemname);
-			req.setAttribute("itmmsg", "Item fetched successfully!");
 			req.setAttribute("item", db);
-
-			// Send Grocery object to JSP
-			req.getRequestDispatcher("fetch.jsp").forward(req, resp);
+			
 		} else {
-			req.setAttribute("itmmsg2", "No such item exists in your database.");
-			req.getRequestDispatcher("fetch.jsp").include(req, resp);
+			req.setAttribute("itmmsg", "No such item exists in your database.");
 		}
 
-		// Forward to JSP
-//		req.getRequestDispatcher("fetch.jsp").forward(req, resp);
+		req.getRequestDispatcher("fetch.jsp").include(req, resp);
 	}
 }

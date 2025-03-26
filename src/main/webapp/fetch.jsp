@@ -6,25 +6,61 @@
 <meta charset="UTF-8">
 <title>Item Details</title>
 <link rel="stylesheet" type="text/css" href="style.css">
-</head>
+<style type="text/css">
+     #dash{ 
+     	position:absolute; 
+     	top : 50px; 
+     	right:50px; 
+     } 
+     #dBut,button{ 
+     	color:white;
+     	border:2px solid grey;
+     	background-color:black; 
+     	font-size: 16px;
+     	padding: 10px 20px;
+     	border-radius:5px ;
+        cursor: pointer;
+        box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2), 
+                -4px -4px 6px rgba(255, 255, 255, 0.7); /* 3D effect */
+    transition: all 0.2s ease-in-out;
+     }  
 
+	#dBut:hover {
+        background-color: #0056b3;
+    }
+    #upDel{
+    	position:absolute;
+    	bottom:30px;
+    	right:40px;
+    }
+    .but{
+    	font-size: 13px;
+    }
+    #upDel a:nth-child(2) button {
+    	background-color: red;
+	}
+	#upDel a:nth-child(1) button {
+    	background-color: orange;
+	}
+	
+	
+	
+
+</style>
+</head>
 <body>
 
-    <form action="search" method="get">
+	<div id = "dash">
+		<a href = "vendashboard.jsp"><button id = "dBut"> DashBoard</button></a>
+	</div>
+
+    <form action="search" method="post">
         <label for="itemname">Item name:</label>
         <input type="text" id="itemname" name="itemname" placeholder="Enter the Item name" required>
         <input type="submit" value="Search">
     </form>
 	
     <%
-        String msg = (String) request.getAttribute("itmmsg");
-        String msg2 = (String) request.getAttribute("itmmsg2");
-        if (msg != null) {
-    %>
-        <h2><%= msg %></h2>
-    <%
-        }
-
         Grocery item = (Grocery) request.getAttribute("item");
         if (item != null) {
     %>
@@ -61,15 +97,25 @@
         </table>
 
         <!-- Anchor tags for Update and Delete are displayed only when an item is found -->
-        <a href="updateitems.jsp"><button>Update Items</button></a>
-        <a href="deleteitem"><button>Delete Items</button></a>
+       	<div id = "upDel">
+       	 	<a href="updateitems.jsp"><button class = "but">Update Items</button></a>
+        	<a href="deleteitem"><button class = "but">Delete Items</button></a>
+       	</div>
     <%
-        } else {
-    %>
-        <h2><%= msg2 %></h2>
-    <%
+        
         }
     %>
+    
+    <script>
+    <%
+    String msg = (String) request.getAttribute("itmmsg");
+    if (msg != null) {
+%>
+    	alert("<%= msg %>");
+<%
+    }
+    %>
+    </script>
 
 </body>
 </html>

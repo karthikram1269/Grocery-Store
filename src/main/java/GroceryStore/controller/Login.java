@@ -18,19 +18,21 @@ public class Login extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
-		String usertype = req.getParameter("usertype");
-
+		
+		System.out.println(email+" in login .java");
+		
 		UserDao dao = new UserDao();
 		GroceryDao gdao = new GroceryDao();
 		User db = dao.fetchUser(email);
+		
 		if (db != null) {
-			if (db.getPassword().equals(password) && db.getUsertype().equals(usertype)) {
+			if (db.getPassword().equals(password) ) {
+				
 				HttpSession httpsession = req.getSession();
 				httpsession.setAttribute("loginEmail", email);
 				httpsession.setAttribute("loginPwd", password);
-				httpsession.setAttribute("logintype", usertype);
 
-				if (usertype.equals("vendor")) {
+				if (db.getUsertype().equals("vendor")) {
 					req.getRequestDispatcher("vendashboard.jsp").forward(req, resp);
 				} else {
 					Grocery[] groceries = gdao.fetchAllItems();

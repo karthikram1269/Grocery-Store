@@ -51,10 +51,51 @@ public class GroceryDao {
 			PreparedStatement p = con.prepareStatement("select * from item where email=?");
 			p.setString(1, email);
 			ResultSet res = p.executeQuery();
-			out.println("<html><body>");
+			out.println("<html><body>"
+					+ "<style>\r\n"
+					+ "button {\r\n"
+					+ "        background-color: #007bff;\r\n"
+					+ "        color: white;\r\n"
+					+ "        border: none;\r\n"
+					+ "        border-radius: 5px;\r\n"
+					+ "        padding: 10px 20px;\r\n"
+					+ "        font-size: 16px;\r\n"
+					+ "        cursor: pointer;\r\n"
+					+ "        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n"
+					+ "        transition: background-color 0.3s;\r\n"
+					+ "    }\r\n"
+					+ "    button:hover {\r\n"
+					+ "        background-color: #0056b3;\r\n"
+					+ "    }\r\n"
+					+ "    button:focus {\r\n"
+					+ "        outline: none;\r\n"
+					+ "    }\r\n"
+					+ "    a button {\r\n"
+					+ "        display: inline-block;\r\n"
+					+ "        margin: 0 auto;\r\n"
+					+ "    }\r\n"
+					+ "    #dash{\r\n"
+					+ "    	position:absolute;\r\n"
+					+ "    	top : 50px;\r\n"
+					+ "    	right:50px;\r\n"
+					+ "    }\r\n"
+					+ "    #dBut{\r\n"
+					+ "    	padding:10px 8px;\r\n"
+					+ "    	color:white;\r\n"
+					+ "    	background-color:green;\r\n"
+					+ "    	border:none;\r\n"
+					+ "        border-radius: 5px;\r\n"
+					+ "        padding: 10px 20px;\r\n"
+					+ "        font-size: 16px;\r\n"
+					+ "        cursor: pointer;\r\n"
+					+ "        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n"
+					+ "        transition: background-color 0.3s;\r\n"
+					+ "    }</style>");
 			out.println("<h1>All My Items</h1>");
 			out.println(
-					"<table border='1'><tr><th>Item Id</th><th>Item Type</th><th>Item Name</th><th>Item Price</th><th>Item Quantity</th><th>Item Image</th></tr>");
+					"<div id=\"dash\">\r\n"
+					+ "		<a href=\"vendashboard.jsp\"><button id=\"dBut\">DashBoard</button></a>\r\n"
+					+ "	</div><table border='1'><tr><th>Item Id</th><th>Item Type</th><th>Item Name</th><th>Item Price</th><th>Item Quantity</th><th>Item Image</th></tr>");
 			while (res.next()) {
 				int itemid = res.getInt(1);
 				String itemtype = res.getString(2);
@@ -79,6 +120,7 @@ public class GroceryDao {
 				System.out.println("Invalid email....");
 				out.println("<p>No items found for the provided email.</p>");
 			}
+			out.println("</table></body></html>");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

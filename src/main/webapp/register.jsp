@@ -19,16 +19,17 @@ body {
 
 form {
 	background: #ffffff;
-	padding: 20px;
+	padding: 10px 20px;
 	border-radius: 10px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	max-width: 400px;
 	width: 100%;
 }
 
-h1 {
+h2 {
 	text-align: center;
-	margin-bottom: 20px;
+/* 	margin-top:0px; */
+	margin-bottom: 10px;
 	color: #333333;
 }
 
@@ -42,8 +43,8 @@ label {
 input[type="text"], input[type="email"], input[type="password"], input[type="tel"]
 	{
 	width: 100%;
-	padding: 10px;
-	margin-bottom: 15px;
+	padding: 8px;
+	margin-bottom: 10px;
 	border: 1px solid #cccccc;
 	border-radius: 5px;
 	box-sizing: border-box;
@@ -58,7 +59,7 @@ input[type="radio"] {
 }
 
 input[type="submit"] {
-	background-color: #007bff;
+	background-color: green;
 	color: #ffffff;
 	padding: 10px;
 	border: none;
@@ -68,13 +69,19 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-	background-color: #0056b3;
+	color: #ffffff;
 }
 
 p {
 	text-align: center;
-	margin-top: 15px;
+	margin-top: 10px;
+	font-size:14px;
 }
+a{
+	font-size: 16px;
+	font-weight: bold;
+}
+
 
 p a {
 	color: #007bff;
@@ -94,7 +101,7 @@ p a:hover {
 </head>
 <body>
 	<form action="register" method="post">
-		<h1>Registration Form</h1>
+		<h2>Registration Form</h2>
 		<div class="radio-group">
 			<label>User Type:</label> <input type="radio" value="vendor"
 				name="usertype"> Vendor <input type="radio" value="customer"
@@ -110,10 +117,10 @@ p a:hover {
 			name="phone"> <label for="address">Address:</label> <input
 			type="text" id="address" placeholder="Enter your address"
 			name="address"> <input type="submit" value="REGISTER">
-	</form>
 	<p id="cormth">
-	<span id="account-text">Already have an account?</span> <a href="login.jsp">Login from here</a>
+	<span id="account-text"><a href="login.jsp">Already have an account?</a></span> 
 </p>
+	</form>
 
 <%
 	String msg = (String) request.getAttribute("ExistMes");

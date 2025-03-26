@@ -48,15 +48,15 @@
         margin-right: 8px;
         accent-color: #007bff;
     }
-    .radio-group {
-        margin-bottom: 15px;
-        font-size: 1rem;
-    }
-    .radio-group label {
-        display: inline;
-        margin-right: 15px;
-        color: #333;
-    }
+/*     .radio-group { */
+/*         margin-bottom: 15px; */
+/*         font-size: 1rem; */
+/*     } */
+/*     .radio-group label { */
+/*         display: inline; */
+/*         margin-right: 15px; */
+/*         color: #333; */
+/*     } */
     input[type="submit"] {
         background-color: #007bff;
         color: #ffffff;
@@ -102,11 +102,11 @@
         <label for="password">Password:</label>
         <input type="password" id="password" placeholder="Enter your password" name="password">
 
-        <div class="radio-group">
-            <label>User Type:</label>
-            <label><input type="radio" value="vendor" name="usertype"> Vendor</label>
-            <label><input type="radio" value="customer" name="usertype"> Customer</label>
-        </div>
+<!--         <div class="radio-group"> -->
+<!--             <label>User Type:</label> -->
+<!--             <label><input type="radio" value="vendor" name="usertype"> Vendor</label> -->
+<!--             <label><input type="radio" value="customer" name="usertype"> Customer</label> -->
+<!--         </div> -->
 
         <input type="submit" value="LOGIN">
 

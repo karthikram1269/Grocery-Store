@@ -45,6 +45,23 @@ button {
 	font-weight: bold;
 	margin-top: 20px;
 }
+#dash{
+    	position:absolute;
+    	top : 50px;
+    	right:50px;
+    }
+    #dBut{
+    	padding:10px 8px;
+    	color:white;
+    	background-color:green;
+    	border:none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s;
+    }
 </style>
 <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -108,7 +125,7 @@ button {
                 const itemTotal = parseInt(document.getElementById(`qdis-` + i).textContent) || 0;
                 grandTotal += itemTotal;
             }
-            document.getElementById("total-sum").textContent = `Amount to be paid : ₹`+grandTotal;
+            document.getElementById("total-sum").textContent = `Amount to be paid : \u20B9`+grandTotal;
             document.getElementById("billAmount").value = grandTotal;
         }
     </script>
@@ -129,7 +146,7 @@ button {
 				Cart ID:
 				<%=c.getCartId()%></p>
 			<p id="price-<%=i%>" data-price="<%=c.getcItemPrice()%>">
-				Price: ₹<%=c.getcItemPrice()%></p>
+				Price: &#8377;<%=c.getcItemPrice()%></p>
 			<div>
 				<button type="button" onclick="decreaseQuantity(<%=i%>)">-</button>
 				<span id="q-<%=i%>" class="quantity">1</span>
@@ -142,7 +159,7 @@ button {
 				<button type="button" onclick="increaseQuantity(<%=i%>)">+</button>
 			</div>
 			<p>
-				Total Price: ₹<span id="qdis-<%=i%>"></span>
+				Total Price: &#8377;<span id="qdis-<%=i%>"></span>
 			</p>
 		</div>
 		<%
@@ -150,7 +167,7 @@ button {
 		}
 		%>
 	</div>
-	<p id="total-sum">Grand Total: ₹</p>
+	<p id="total-sum">Grand Total: &#8377;</p>
 
 	<form action="billing" method="post"
 		style="text-align: center; margin-top: 20px;">
@@ -166,7 +183,7 @@ button {
 	<%
 	}
 	%>
-	<form action="log-in" method="post">
+	<form id="dash" action="login" method="post">
 			<%
 			HttpSession ses = request.getSession();
 			%>
@@ -176,7 +193,7 @@ button {
 				hidden="true"> 
 				<input type="password" name="password"
 				value="<%=ses.getAttribute("loginPwd")%>" hidden="true">
-			<button style = "bORDER-RADIUS : 3px;BORDER : 1PX SOLID BLACK;box-shadow : 5px 5px gray;color:blue; background-color: cerel"> DASHBOARD </button>
+		<a href="cusdashboard.jsp"><button id="dBut">DashBoard</button></a>
 		</form>
 	</div>
 </body>

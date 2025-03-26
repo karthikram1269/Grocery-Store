@@ -28,7 +28,7 @@
     form input {
         width: 100%;
         padding: 10px;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         border: 1px solid #ced4da;
         border-radius: 5px;
         box-sizing: border-box;
@@ -42,10 +42,10 @@
     form input[type="submit"]:hover {
         background-color: #0056b3;
     }
-    h1 {
+    h2 {
         color: #333333;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 13px;
     }
     a {
         display: block;
@@ -57,8 +57,45 @@
     a:hover {
         text-decoration: underline;
     }
-    h1, h2 {
+    h2, h2 {
         color: #495057;
+    }
+            background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    button:focus {
+        outline: none;
+    }
+    a button {
+        display: inline-block;
+        margin: 0 auto;
+    }
+    #dash{
+    	position:absolute;
+    	top : 50px;
+    	right:50px;
+    }
+    #dBut{
+    	padding:10px 8px;
+    	color:white;
+    	background-color:green;
+    	border:none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s;
     }
 </style>
 </head>
@@ -71,7 +108,7 @@
     if (db != null) {
 %>
     <form action="edit" method="post">
-        <h1>Edit Profile</h1>
+        <h2>Edit Profile</h2>
 
         <label for="usertype">User Type:</label>
         <input type="text" id="usertype" value="<%= db.getUsertype() %>" readonly="readonly">
@@ -98,7 +135,9 @@
         request.getRequestDispatcher("login.jsp").include(request, response);
     }
 %>
-<a href="profile.jsp">Click here to go back</a>
+	<div id="dash">
+		<a href="vendashboard.jsp"><button id="dBut">DashBoard</button></a>
+	</div>
 <%
     String msg = (String) request.getAttribute("upmsg");
     if (msg != null) {
